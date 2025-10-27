@@ -1,0 +1,32 @@
+apiVersion: apps/v1 #Indique la version de l’API Kubernetes utilisée pour ce type de ressource.
+kind: Deployment #Spécifie le type de ressource que tu crées
+metadata:
+  name: crm-frontend
+spec: #La définition concrète de ce que le Deployment doit faire.
+  replicas: 1 #Nombre de Pods identiques à lancer (On peut mettre 3 pour le load balancing)
+  selector: #Indique comment Kubernetes sait quels Pods appartiennent à ce Deployment.
+    matchLabels:
+      app: crm-frontend
+  template:
+    metadata:
+      labels:
+        app: crm-frontend
+    spec: #Spécifie le contenu du Pod, c’est-à-dire les conteneurs à lancer.
+      containers:
+        - name: crm-frontend
+          image: crm-frontend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crm-frontend
+spec:
+  selector:
+    app: crm-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: NodePort
