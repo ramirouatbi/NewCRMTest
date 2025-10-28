@@ -97,7 +97,7 @@ jobs:
     needs: [unit-tests, build, test-e2e]  
     steps:
       - name: Download Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docker-image
 
