@@ -100,6 +100,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: docker-image
+          path: .
+
+      - name: Debug — list files after download
+        run: ls -R .
 
       - name: Load image
         run: docker load --input docker-image/image.tar
